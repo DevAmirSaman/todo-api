@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Environments
+.venv/
+.env
+
+# Django
+migrations/
+
+# Ruff stuff
+ruff.toml
+.ruff_cache
+
+# OS stuff
+.DS_Store
+ 
