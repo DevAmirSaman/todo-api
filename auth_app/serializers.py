@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from users.validators import validate_username
 
@@ -8,7 +9,12 @@ User = get_user_model()
 
 class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
-    username = serializers.CharField(validators=[validate_username])
+    username = serializers.CharField(
+        validators=[
+            UniqueValidator(queryset=User.objects.all()),
+            validate_username,
+        ]
+    )
 
     class Meta:
         model = User
