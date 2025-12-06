@@ -17,3 +17,6 @@ ruff.toml
 # OS stuff
 .DS_Store
  
+# Unit test / coverage reports
+.pytest_cache/
+ 
