@@ -1,22 +1,24 @@
 import pytest
-import io
-from PIL import Image
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
-from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 User = get_user_model()
 
 
 class TestUserAPI:
-    @pytest.mark.parametrize('method,url_name', [
-        ('get', 'user-profile'),
-        ('patch', 'user-profile'),
-        ('delete', 'user-profile'),
-    ])
-    def test_user_endpoints_require_authentication(self, api_client, method, url_name):
+    @pytest.mark.parametrize(
+        'method,url_name',
+        [
+            ('get', 'user-profile'),
+            ('patch', 'user-profile'),
+            ('delete', 'user-profile'),
+        ],
+    )
+    def test_user_endpoints_require_authentication(
+        self, api_client, method, url_name
+    ):
         """Test that user-profile endpoint require authentication."""
         url = reverse(url_name)
 
@@ -65,7 +67,9 @@ class TestUserAPI:
         for field, value in data.items():
             assert getattr(user, field) == value
 
-    def test_avatar_cannot_be_updated_via_user_endpoint(self, api_client, user, image):
+    def test_avatar_cannot_be_updated_via_user_endpoint(
+        self, api_client, user, image
+    ):
         api_client.force_authenticate(user=user)
         url = reverse('user-profile')
 
@@ -107,11 +111,16 @@ class TestUserAPI:
 
 
 class TestAvatarAPI:
-    @pytest.mark.parametrize('method,url_name', [
-        ('patch', 'user-avatar'),
-        ('delete', 'user-avatar'),
-    ])
-    def test_user_avatar_endpoints_require_authentication(self, api_client, method, url_name):
+    @pytest.mark.parametrize(
+        'method,url_name',
+        [
+            ('patch', 'user-avatar'),
+            ('delete', 'user-avatar'),
+        ],
+    )
+    def test_user_avatar_endpoints_require_authentication(
+        self, api_client, method, url_name
+    ):
         """Test that user-avatar endpoint require authentication."""
         url = reverse(url_name)
 

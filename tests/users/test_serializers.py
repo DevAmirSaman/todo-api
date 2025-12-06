@@ -1,7 +1,8 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
 import io
-from PIL import Image
+
 import pytest
+from django.core.files.uploadedfile import SimpleUploadedFile
+from PIL import Image
 
 from users.serializers import AvatarSerializer, UserSerializer
 
@@ -21,21 +22,28 @@ class TestAvatarSerializer:
         file = io.BytesIO()
         Image.new('RGB', (10, 10), color='red').save(file, format='GIF')
         file.seek(0)
-        image = SimpleUploadedFile('avatar.gif', file.read(), content_type='image/gif')
+        image = SimpleUploadedFile(
+            'avatar.gif', file.read(), content_type='image/gif'
+        )
 
         serializer = AvatarSerializer(data={'avatar': image})
 
         assert not serializer.is_valid()
-        assert 'Only JPEG and PNG images are allowed.' in str(serializer.errors)
+        assert 'Only JPEG and PNG images are allowed.' in str(
+            serializer.errors
+        )
 
 
 class TestUserSerializer:
-    @pytest.mark.parametrize('username', [
-        'abc',          # too short
-        '1abcdef',      # starts with digit
-        '_username',    # starts with symbol
-        'a' * 33,       # too long
-    ])
+    @pytest.mark.parametrize(
+        'username',
+        [
+            'abc',  # too short
+            '1abcdef',  # starts with digit
+            '_username',  # starts with symbol
+            'a' * 33,  # too long
+        ],
+    )
     def test_username_invalid(self, username):
         """Test that invalid usernames are rejected by the serializer."""
         serializer = UserSerializer(data={'username': username})

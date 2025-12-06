@@ -22,9 +22,13 @@ class AvatarSerializer(serializers.ModelSerializer):
 
     def validate_avatar(self, value):
         if value.size > 1024 * 1024:
-            raise serializers.ValidationError('Avatar file too large. Max 1MB allowed.')
+            raise serializers.ValidationError(
+                'Avatar file too large. Max 1MB allowed.'
+            )
 
         if value.content_type not in ['image/jpeg', 'image/png']:
-            raise serializers.ValidationError('Only JPEG and PNG images are allowed.')
+            raise serializers.ValidationError(
+                'Only JPEG and PNG images are allowed.'
+            )
 
         return value

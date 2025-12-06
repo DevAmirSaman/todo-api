@@ -1,11 +1,12 @@
-import pytest
 import io
-import tempfile
 import shutil
-from PIL import Image
+import tempfile
+
+import pytest
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from django.core.files.uploadedfile import SimpleUploadedFile
+from PIL import Image
+from rest_framework.test import APIClient
 
 User = get_user_model()
 
@@ -30,9 +31,7 @@ def image():
     file.seek(0)
 
     return SimpleUploadedFile(
-        name='avatar.png',
-        content=file.read(),
-        content_type='image/png'
+        name='avatar.png', content=file.read(), content_type='image/png'
     )
 
 
