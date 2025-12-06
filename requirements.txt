@@ -4,3 +4,4 @@ psycopg[binary,pool]
 python-decouple
 pytest
 pytest-django
+Pillow
