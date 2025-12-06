@@ -12,6 +12,13 @@ class TestSignup:
         response = api_client.post(url, data)
 
         assert response.status_code == status.HTTP_201_CREATED
+
+    def test_proper_data_returned_on_signup(self, api_client):
+        data = {'username': 'newuser', 'password': 'newpassword123'}
+        url = reverse('signup')
+        response = api_client.post(url, data)
+
+        assert response.status_code == status.HTTP_201_CREATED
         assert response.data['username'] == 'newuser'
         assert 'token' in response.data
         assert 'password' not in response.data
