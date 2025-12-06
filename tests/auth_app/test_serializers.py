@@ -9,6 +9,7 @@ User = get_user_model()
 @pytest.mark.django_db
 class TestSignupSerializer:
     def test_password_too_short(self):
+        """Test that password contains more than 8 characters."""
         data = {'username': 'testusername', 'password': '1234567'}
         serializer = SignupSerializer(data=data)
 
@@ -16,6 +17,7 @@ class TestSignupSerializer:
         assert 'password' in serializer.errors
 
     def test_cannot_sign_up_with_existing_username(self, user):
+        """Test sign up with existing username fails."""
         data = {'username': user.username, 'password': 'anotherpassword123'}
         serializer = SignupSerializer(data=data)
 
