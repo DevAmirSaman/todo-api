@@ -5,6 +5,7 @@ from django.urls import include, path
 urlpatterns = [
     path('auth/', include('auth_app.urls')),
     path('users/', include('users.urls')),
+    path('tasks/', include('tasks.urls')),
 ]
 
 if settings.DEBUG:
